@@ -1,0 +1,28 @@
+{
+	"Metadata":
+	{
+		"Name": "FBZ Background Crash",
+		"Author": "Cosmic",
+		"Description": "Adds a detail where Flying Battery crash lands after you leave and go to the next zone.",
+		"URL": "",
+		"ModVersion": "1.0",
+		"GameVersion": "22.09.10.0 / 23.05.14.1"
+	},
+	"Settings":
+	{
+		"List":
+		[
+			{
+				"InternalName": "WhereToCrash",
+				"DisplayName": "Crash Position",
+				"Variable": "crash.location",
+				"DefaultValue": "0x01",
+				"Options":
+				{
+				   "0x00": "On-Screen",
+					"0x01": "Off-Screen"
+				}
+			}
+		]
+	}
+}

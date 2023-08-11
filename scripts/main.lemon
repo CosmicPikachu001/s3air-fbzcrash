@@ -1,0 +1,158 @@
+global u16 batterycrashtimerA
+global u16 batterycrashtimerB
+global u16 batterycrashtimerC
+global u8 batterycrashtimerD
+global u8 tr
+global u8 crash.location
+
+global u8 sozBattery // SOZ Var
+
+//ICZ version for Original zone order
+
+//# address-hook(0x053724) end(0x053728)
+function void UpdateLevelScrolling.ICZ1()
+{
+	if(Mods.isModActive("Original zone order"))
+	{
+		if (batterycrashtimerD < 120)
+		{
+			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
+			//Explosions
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 27, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
+			//Timers
+			if(batterycrashtimerD == 119)
+			{
+				playSound(0x4e)
+			}
+		}
+		if(batterycrashtimerD < 180)
+		{
+			++batterycrashtimerD
+			if(crash.location)
+			{
+				batterycrashtimerA += 2
+				batterycrashtimerC += 4
+			}
+			else
+			{
+				++batterycrashtimerA
+				batterycrashtimerC += 2
+			}
+			batterycrashtimerB = batterycrashtimerA / 2
+			if (batterycrashtimerD > 119)
+			{
+				if(batterycrashtimerD > 130)
+					tr -= 5
+				Renderer.drawCustomSprite("screenflash", 0, 0, 0x00, SPRITE_FLAG_PRIO, 0xffff, 0x0, tr)
+			}
+		}
+	}
+	
+	D0.u16 = level.scrolling_routine
+	call 0x05372c + D0.s16
+}
+
+//SOZ Version for Final zone order
+
+//# address-hook(0x055a7a) end(0x055a7e)
+function void UpdateLevelScrolling.SOZ1()
+{
+	if(!Mods.isModActive("Original zone order") && sozBattery)
+	{
+		if (batterycrashtimerD == 1)
+		{
+			Game.startSkippableCutscene()
+		}
+		if (batterycrashtimerD < 119)
+		{
+			player1.control_override = 0x1
+			player2.control_override = 0x1
+			control.player1 = 0
+			control.player2 = 0
+		}
+		if (batterycrashtimerD < 120)
+		{
+			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
+			//Explosions
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 27, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
+			//Timers
+			if(batterycrashtimerD == 119)
+			{
+				Game.endSkippableCutscene()
+				player1.control_override = 0x0
+				player2.control_override = 0x0
+				control.player1 = 0
+				control.player2 = 0
+				playSound(0x4e)
+			}
+		}
+		if(batterycrashtimerD < 180)
+		{
+			++batterycrashtimerD
+			if(crash.location)
+			{
+				batterycrashtimerA += 2
+				batterycrashtimerC += 4
+			}
+			else
+			{
+				++batterycrashtimerA
+				batterycrashtimerC += 2
+			}
+			batterycrashtimerB = batterycrashtimerA / 2
+			if (batterycrashtimerD > 119)
+			{
+				if(batterycrashtimerD > 130)
+					tr -= 5
+				Renderer.drawCustomSprite("screenflash", 0, 0, 0x00, SPRITE_FLAG_PRIO, 0xffff, 0x0, tr)
+			}
+		}
+	}
+	
+	call 0x055a82 + level.scrolling_routine
+
+#if STANDALONE
+	// Draw dark sand pit overlays
+	SOZ.drawDarkSandPit(0x0b00, 0x0b50, 0x200)
+	SOZ.drawDarkSandPit(0x1280, 0x0ad0, 0x180)
+	SOZ.drawDarkSandPit(0x1880, 0x0b40, 0x280)
+	SOZ.drawDarkSandPit(0x2680, 0x0ad0, 0x200)
+	SOZ.drawDarkSandPit(0x2d00, 0x0b50, 0x280)
+#endif
+}
+
+function void fn0420de()
+{
+	if (u32[A1] != 0)
+	{
+		objA1.velocity.y = -0x800
+		objA1.state = char.state.STRAIGHTJUMP
+		u8[A1 + 0x2a] |= char.flag.IN_AIR
+		u8[A1 + 0x2e] = 1
+		u8[A1 + 0x40] = 0
+		sozBattery = 1
+	}
+}
+
+//# address-hook(0x02d6a6) end(0x02d768)
+function void TitleCard.Init()
+{
+	batterycrashtimerA = 0
+	batterycrashtimerB = 0
+	batterycrashtimerC = 0
+	batterycrashtimerD = 0
+	tr = 0xff
+	sozBattery = 0 // SOZ Var
+
+	base.TitleCard.Init()
+}

@@ -1,0 +1,10 @@
+{
+	"fbz_crash": { "File": "fbz-crashing.png" },
+	"fbz_explosion1": { "File": "fbz-explosions.png", "Rect": "0,0,8,8", "Center": "4,4" },
+	"fbz_explosion2": { "File": "fbz-explosions.png", "Rect": "12,0,12,12", "Center": "6,6" },
+	"fbz_explosion3": { "File": "fbz-explosions.png", "Rect": "28,0,12,12", "Center": "6,6" },
+	"fbz_explosion4": { "File": "fbz-explosions.png", "Rect": "44,0,12,12", "Center": "6,6" },
+	"fbz_explosion5": { "File": "fbz-explosions.png", "Rect": "60,0,12,12", "Center": "6,6" },
+	"fbz_explosion6": { "File": "fbz-explosions.png", "Rect": "76,0,12,8", "Center": "6,4" },
+	"screenflash": { "File": "screenflash.png" }
+}

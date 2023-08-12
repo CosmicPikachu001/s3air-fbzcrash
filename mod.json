@@ -19,8 +19,19 @@
 				"DefaultValue": "0x01",
 				"Options":
 				{
-				   "0x00": "On-Screen",
+					"0x00": "On-Screen",
 					"0x01": "Off-Screen"
+				}
+			},
+			{
+				"InternalName": "CrashKnuxOnly",
+				"DisplayName": "Play out event for who? (Final zone order)",
+				"Variable": "fbzcrash.knuxonly",
+				"DefaultValue": "0x01",
+				"Options":
+				{
+					"0x00": "Everyone",
+					"0x01": "Knuckles Only"
 				}
 			}
 		]

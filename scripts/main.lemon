@@ -4,6 +4,7 @@ global u16 batterycrashtimerC
 global u8 batterycrashtimerD
 global u8 tr
 global u8 crash.location
+global u8 fbzcrash.knuxonly
 
 global u8 sozBattery // SOZ Var
 
@@ -12,7 +13,7 @@ global u8 sozBattery // SOZ Var
 //# address-hook(0x053724) end(0x053728)
 function void UpdateLevelScrolling.ICZ1()
 {
-	if(Mods.isModActive("Original zone order"))
+	if(Mods.isModActive("Original zone order") && checkpoint.number == 0 && fbzcrash.charChecks())
 	{
 		if (batterycrashtimerD < 120)
 		{
@@ -62,7 +63,7 @@ function void UpdateLevelScrolling.ICZ1()
 //# address-hook(0x055a7a) end(0x055a7e)
 function void UpdateLevelScrolling.SOZ1()
 {
-	if(!Mods.isModActive("Original zone order") && sozBattery)
+	if(!Mods.isModActive("Original zone order") && sozBattery && checkpoint.number == 0 && fbzcrash.knuxCheck())
 	{
 		if (batterycrashtimerD == 1)
 		{
@@ -77,14 +78,14 @@ function void UpdateLevelScrolling.SOZ1()
 		}
 		if (batterycrashtimerD < 120)
 		{
-			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
+			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 80, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
 			//Explosions
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 27, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 67, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 50, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 30, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 45, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 55, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
 			//Timers
 			if(batterycrashtimerD == 119)
 			{
@@ -155,4 +156,22 @@ function void TitleCard.Init()
 	sozBattery = 0 // SOZ Var
 
 	base.TitleCard.Init()
+}
+
+function bool fbzcrash.knuxCheck()
+{
+	if (isMainCharacter(CHARACTER_KNUCKLES) && fbzcrash.knuxonly)
+		return true
+}
+
+//Character checks, ES chars get the event when they hit the wall
+function bool fbzcrash.charChecks()
+{
+	if (isMainCharacter(CHARACTER_SONIC))
+		return true
+	
+	if (isMainCharacter(CHARACTER_TAILS) && Mods.isModActive("Tails Snowboards"))
+		return true
+	
+	return false
 }

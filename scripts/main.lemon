@@ -4,7 +4,8 @@ global u16 batterycrashtimerC
 global u8 batterycrashtimerD
 global u8 tr
 global u8 crash.location
-global u8 fbzcrash.knuxonly
+global u8 crash.sound
+global u8 crash.flash
 
 global u8 sozBattery // SOZ Var
 
@@ -28,7 +29,18 @@ function void UpdateLevelScrolling.ICZ1()
 			//Timers
 			if(batterycrashtimerD == 119)
 			{
-				playSound(0x4e)
+				if (!crash.sound)
+				{
+					playSound(0x4e)
+				}
+				else
+				{
+					playSound(0x9b)
+				}
+				if(!crash.flash)
+				{
+					camera.hyper_knux_shake = 0x0114
+				}
 			}
 		}
 		if(batterycrashtimerD < 180)
@@ -47,9 +59,12 @@ function void UpdateLevelScrolling.ICZ1()
 			batterycrashtimerB = batterycrashtimerA / 2
 			if (batterycrashtimerD > 119)
 			{
-				if(batterycrashtimerD > 130)
-					tr -= 5
-				Renderer.drawCustomSprite("screenflash", 0, 0, 0x00, SPRITE_FLAG_PRIO, 0xffff, 0x0, tr)
+				if(crash.flash)
+				{
+					if(batterycrashtimerD > 130)
+						tr -= 5
+					Renderer.drawCustomSprite("screenflash", 0, 0, 0x00, SPRITE_FLAG_PRIO, 0xffff, 0x0, tr)
+				}
 			}
 		}
 	}
@@ -63,7 +78,7 @@ function void UpdateLevelScrolling.ICZ1()
 //# address-hook(0x055a7a) end(0x055a7e)
 function void UpdateLevelScrolling.SOZ1()
 {
-	if(!Mods.isModActive("Original zone order") && sozBattery && checkpoint.number == 0 && fbzcrash.knuxCheck())
+	if(!Mods.isModActive("Original zone order") && sozBattery && checkpoint.number == 0 && isMainCharacter(CHARACTER_KNUCKLES))
 	{
 		if (batterycrashtimerD == 1)
 		{
@@ -78,23 +93,32 @@ function void UpdateLevelScrolling.SOZ1()
 		}
 		if (batterycrashtimerD < 120)
 		{
-			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 80, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
+			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
 			//Explosions
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 67, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 50, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 30, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 45, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 3) % 7), batterycrashtimerC + getScreenExtend() - 55, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 27, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
 			//Timers
 			if(batterycrashtimerD == 119)
 			{
 				Game.endSkippableCutscene()
-				player1.control_override = 0x0
-				player2.control_override = 0x0
-				control.player1 = 0
-				control.player2 = 0
-				playSound(0x4e)
+				player1.control_override = 0
+				player2.control_override = 0
+				if (!crash.sound)
+				{
+					playSound(0x4e)
+				}
+				else
+				{
+					playSound(0x9b)
+				}
+				if(!crash.flash)
+				{
+					camera.hyper_knux_shake = 0x0114
+				}
 			}
 		}
 		if(batterycrashtimerD < 180)
@@ -113,9 +137,12 @@ function void UpdateLevelScrolling.SOZ1()
 			batterycrashtimerB = batterycrashtimerA / 2
 			if (batterycrashtimerD > 119)
 			{
-				if(batterycrashtimerD > 130)
-					tr -= 5
-				Renderer.drawCustomSprite("screenflash", 0, 0, 0x00, SPRITE_FLAG_PRIO, 0xffff, 0x0, tr)
+				if(crash.flash)
+				{
+					if(batterycrashtimerD > 130)
+						tr -= 5
+					Renderer.drawCustomSprite("screenflash", 0, 0, 0x00, SPRITE_FLAG_PRIO, 0xffff, 0x0, tr)
+				}
 			}
 		}
 	}
@@ -158,13 +185,7 @@ function void TitleCard.Init()
 	base.TitleCard.Init()
 }
 
-function bool fbzcrash.knuxCheck()
-{
-	if (isMainCharacter(CHARACTER_KNUCKLES) && fbzcrash.knuxonly)
-		return true
-}
-
-//Character checks, ES chars get the event when they hit the wall
+//Character checks so that ES mods with snowboarding can overwrite this function
 function bool fbzcrash.charChecks()
 {
 	if (isMainCharacter(CHARACTER_SONIC))

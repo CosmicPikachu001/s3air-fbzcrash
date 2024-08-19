@@ -20,12 +20,12 @@ function void UpdateLevelScrolling.ICZ1()
 		{
 			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
 			//Explosions
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 27, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 27, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
 			//Timers
 			if(batterycrashtimerD == 119)
 			{
@@ -96,11 +96,11 @@ function void UpdateLevelScrolling.SOZ1()
 			Renderer.drawCustomSprite("fbz_crash", batterycrashtimerC + getScreenExtend() - 40, batterycrashtimerB, 0x30, 0, 0x1200, 0x13, 0xff)
 			//Explosions
 			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 27, batterycrashtimerB + 25, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
-			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 5) % 7), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (1 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 10, batterycrashtimerB + 35, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (2 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 0, batterycrashtimerB + 45, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (3 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() + 10, batterycrashtimerB + 55, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (4 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 5, batterycrashtimerB + 60, 0x30, 0, 0x1201, 0x13, 0xff)
+			Renderer.drawCustomSprite(stringformat("fbz_explosion%d", (5 + batterycrashtimerA / 5) % 6), batterycrashtimerC + getScreenExtend() - 15, batterycrashtimerB + 50, 0x30, 0, 0x1201, 0x13, 0xff)
 			//Timers
 			if(batterycrashtimerD == 119)
 			{
